@@ -16,7 +16,7 @@ struct GridCoordinate {
 //MARK: - Main class, lifecycle related methods
 class Grid: CCNode {
 
-    var tiles: [[Tile]]! = [[Tile]](count:7, repeatedValue:[Tile](count:7, repeatedValue:Tile()))
+    var tiles: [[Tile?]] = [[Tile?]](count: 7, repeatedValue: [Tile?](count: 7, repeatedValue: Tile?()))
     var state: GameState!
     var columnWidth: CGFloat = 0
     var columnHeight: CGFloat = 0
@@ -24,6 +24,10 @@ class Grid: CCNode {
     var tileMarginHorizontal: CGFloat = 0
     //Grid+Touch
     var touchTile: Tile!
+    //Grid+Match
+    var matches: [Match] = [Match]()
+    var matched: Set<Tile> = []
+    var needsCheck: Bool = false
     
     let GRID_SIZE: Int = 7
     
@@ -49,21 +53,10 @@ class Grid: CCNode {
     func addTileToGrid(tile: Tile, atGridCoordinate coordinate: GridCoordinate) {
         tiles[coordinate.column][coordinate.row] = tile
         self.addChild(tile)
-        //tile.position = self.pointFromGridCoordinate(coordinate)
+        var spawnCoordinate = GridCoordinate(row: coordinate.row, column: 8)
+        tile.position = self.pointFromGridCoordinate(spawnCoordinate)
         tile.gridCoordinate = coordinate
         self.animateTile(tile, toGridCoordinate: coordinate)
-    }
-    
-    func swapTouchTileWithTile(tile: Tile) {
-        //swap grid coordinates
-        var tempCoordinate = touchTile.gridCoordinate
-        touchTile.gridCoordinate = tile.gridCoordinate
-        tile.gridCoordinate = tempCoordinate
-        //swap array location
-        tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = tile
-        tiles[touchTile.gridCoordinate.column][touchTile.gridCoordinate.row] = touchTile
-        self.animateTileSwap(touchTile, second: tile)
-        touchTile = Tile.dummyTile()
     }
     
 }

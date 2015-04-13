@@ -14,7 +14,8 @@ extension Grid {
         let endPosition = self.pointFromGridCoordinate(coord)
         //var startPosition = ccpAdd(endPosition, ccp(0,300))
         //tile.position = startPosition
-        let action = CCActionMoveTo(duration: 0.3, position: endPosition)
+        let action = CCActionMoveTo(duration: 0.2, position: endPosition)
+        //tile.runAction(CCActionSequence(array: [action, block]))
         tile.runAction(action)
     }
     

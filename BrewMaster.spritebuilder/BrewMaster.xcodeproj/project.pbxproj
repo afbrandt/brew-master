@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4936AB2F1AD9EADC0027D197 /* Grid+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4936AB2E1AD9EADC0027D197 /* Grid+Move.swift */; };
 		49ADA9B81AD5FB2C00B2E3CC /* Tile+Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ADA9B71AD5FB2C00B2E3CC /* Tile+Ingredient.swift */; };
 		49ADA9BA1AD61B1100B2E3CC /* Grid+Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ADA9B91AD61B1100B2E3CC /* Grid+Match.swift */; };
 		49F510901ACF9BCB00167711 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F5108F1ACF9BCB00167711 /* Gameplay.swift */; };
@@ -156,6 +157,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4936AB2E1AD9EADC0027D197 /* Grid+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Grid+Move.swift"; path = "Source/Grid+Move.swift"; sourceTree = "<group>"; };
 		49ADA9B71AD5FB2C00B2E3CC /* Tile+Ingredient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tile+Ingredient.swift"; path = "Source/Tile+Ingredient.swift"; sourceTree = "<group>"; };
 		49ADA9B91AD61B1100B2E3CC /* Grid+Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Grid+Match.swift"; path = "Source/Grid+Match.swift"; sourceTree = "<group>"; };
 		49F5108F1ACF9BCB00167711 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Gameplay.swift; path = Source/Gameplay.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				49F510931ACF9F4A00167711 /* Grid.swift */,
+				4936AB2E1AD9EADC0027D197 /* Grid+Move.swift */,
 				49ADA9B91AD61B1100B2E3CC /* Grid+Match.swift */,
 				49F5109A1AD1266C00167711 /* Grid+Animate.swift */,
 				49F510961AD06DC300167711 /* Grid+Touch.swift */,
@@ -862,6 +865,7 @@
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				49F510941ACF9F4B00167711 /* Grid.swift in Sources */,
 				49ADA9B81AD5FB2C00B2E3CC /* Tile+Ingredient.swift in Sources */,
+				4936AB2F1AD9EADC0027D197 /* Grid+Move.swift in Sources */,
 				49F5109B1AD1266D00167711 /* Grid+Animate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

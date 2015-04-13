@@ -13,7 +13,7 @@ var currentState: GameState!
 class GameState: NSObject {
    
     //TODO: - Swift 1.2 implement as native Set
-    var availableIngredients: [Ingredient]! = [.Leaf, .Flower, .Stem]
+    var availableIngredients: [Ingredient]! = [.Leaf, .Flower, .Stem, .Fruit, .Earth]
     
     //Some tomfoolery to implement singletion pattern
     class var sharedInstance: GameState {

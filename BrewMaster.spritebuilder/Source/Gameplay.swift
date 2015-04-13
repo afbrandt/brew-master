@@ -25,10 +25,12 @@ class Gameplay: CCNode {
                 
                 var ingredient = state.randomAvailableIngredient()
                 var tile = Tile.tileFromIngredient(ingredient)
+                tile.isNewTile = false
                 _grid.addTileToGrid(tile, atColumn: column, atRow: row)
                 //self.scheduleBlock(^{}, delay: delay)
             }
         }
     }
+    
 
 }
