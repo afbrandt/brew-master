@@ -53,7 +53,9 @@ extension Grid {
         if coord.column >= GRID_SIZE-1 {
             var newTile = Tile.tileFromIngredient(state.randomAvailableIngredient())
             newTile.gridCoordinate = coord
-            var tileSpawnPosition = self.pointFromGridCoordinate(GridCoordinate(row: coord.row, column: 7))
+            var columnSpawn = 7+spawnedTiles[coord.row]
+            spawnedTiles[coord.row]++
+            var tileSpawnPosition = self.pointFromGridCoordinate(GridCoordinate(row: coord.row, column: columnSpawn))
             //newTile.position = self.pointFromGridCoordinate(coord)
             newTile.position = tileSpawnPosition
             self.addChild(newTile)

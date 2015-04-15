@@ -17,6 +17,7 @@ struct GridCoordinate {
 class Grid: CCNode {
 
     var tiles: [[Tile?]] = [[Tile?]](count: 7, repeatedValue: [Tile?](count: 7, repeatedValue: Tile?()))
+    var spawnedTiles: [Int] = [Int](count: 7, repeatedValue: 0)
     var state: GameState!
     var columnWidth: CGFloat = 0
     var columnHeight: CGFloat = 0

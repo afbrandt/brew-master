@@ -16,6 +16,7 @@ extension Grid {
             self.settleTiles()
             matches.removeAll(keepCapacity: false)
             matched.removeAll(keepCapacity: false)
+            spawnedTiles = [Int](count: 7, repeatedValue:0)
             var delay = CCActionDelay(duration: 0.5)
             var function = CCActionCallFunc(target: self, selector: Selector("checkMatch"))
             self.runAction(CCActionSequence(array: [delay, function]))
