@@ -24,7 +24,7 @@ class GameState: NSObject {
     }
     
     func randomAvailableIngredient() -> Ingredient {
-        var index = Int(arc4random()) % availableIngredients.count
+        var index = Int(rand()) % availableIngredients.count
         return availableIngredients[index]
     }
 }

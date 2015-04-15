@@ -44,7 +44,7 @@ class Grid: CCNode {
         tileMarginHorizontal = (self.contentSize.width - (CGFloat(GRID_SIZE) * columnWidth)) / (CGFloat(GRID_SIZE)+1)
         tileMarginVertical = (self.contentSize.height - (CGFloat(GRID_SIZE) * columnHeight)) / (CGFloat(GRID_SIZE)+1)
     }
-
+    
     func addTileToGrid(tile: Tile, atColumn column: Int, atRow row: Int) {
         var coord = GridCoordinate(row: row, column: column)
         self.addTileToGrid(tile, atGridCoordinate: coord)

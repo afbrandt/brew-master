@@ -9,12 +9,19 @@
 import UIKit
 
 class Gameplay: CCNode {
-
+    
+    //code connected elements
     var _grid: Grid!
+    var _gridContainer: CCClippingNode!
+    var _gridStencil: CCNode!
+    
+    //programmatic elements
     var state: GameState!
     
     func didLoadFromCCB() {
         state = GameState.sharedInstance
+        _gridContainer.stencil = _gridStencil
+        _gridContainer.alphaThreshold = 0.0
         self.generateGrid()
     }
     
