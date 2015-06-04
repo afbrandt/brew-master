@@ -15,13 +15,13 @@ extension Grid {
         let loc = touch.locationInNode(self) as CGPoint
         let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate
         touchTile = tiles[coord.column][coord.row]
-        println("touch detected at column: \(coord.column) and row: \(coord.row)")
+        //println("touch detected at column: \(coord.column) and row: \(coord.row)")
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         let loc = touch.locationInNode(self) as CGPoint
         let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
-        if touchTile.gridCoordinate.row != -1 &&
+        if touchTile.gridCoordinate.row != -1 && coord.isValid() &&
                 (coord.column != touchTile.gridCoordinate.column ||
                 coord.row != touchTile.gridCoordinate.row) {
             if let tile = tiles[coord.column][coord.row] {
@@ -53,4 +53,5 @@ extension Grid {
         let y = columnWidth * CGFloat(coord.column) + tileMarginVertical * CGFloat(coord.column + 1)
         return CGPoint(x: x, y: y)
     }
+    
 }

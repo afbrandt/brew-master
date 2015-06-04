@@ -14,14 +14,18 @@ extension Grid {
         let endPosition = self.pointFromGridCoordinate(coord)
         //var startPosition = ccpAdd(endPosition, ccp(0,300))
         //tile.position = startPosition
-        //TODO: action length should be a function of distance traveled
         var coordDiff = abs((tile.position.y - endPosition.y) / columnHeight)
-        var actionDuration = CCTime(0.07 * (coordDiff + 1))
+        var actionDuration = CCTime(0.06 * (coordDiff + 1))
         let action = CCActionMoveTo(duration: actionDuration, position: endPosition)
         //tile.runAction(CCActionSequence(array: [action, block]))
         //println("number of actions:\(tile.numberOfRunningActions())")
         //println("coord diff:\(coordDiff)")
-        tile.runAction(action)
+        if tile.numberOfRunningActions() == 0 {
+            tile.runAction(action)
+        } else {
+            tile.stopAllActions()
+            tile.runAction(action)
+        }
     }
     
     func animateTileSwap(first: Tile, second: Tile) {

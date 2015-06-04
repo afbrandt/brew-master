@@ -14,6 +14,7 @@ class Gameplay: CCNode {
     var _grid: Grid!
     var _gridContainer: CCClippingNode!
     var _gridStencil: CCNode!
+    var _bar: Bar!
     
     //programmatic elements
     var state: GameState!
@@ -26,17 +27,18 @@ class Gameplay: CCNode {
     }
     
     func generateGrid() {
-        for var column=0; column<7; column++ {
-            for var row=0; row<7; row++ {
-                var delay = CCTime(column*row/49)
-                
-                var ingredient = state.randomAvailableIngredient()
-                var tile = Tile.tileFromIngredient(ingredient)
-                tile.isNewTile = false
-                _grid.addTileToGrid(tile, atColumn: column, atRow: row)
-                //self.scheduleBlock(^{}, delay: delay)
-            }
-        }
+//        for var column=0; column<7; column++ {
+//            for var row=0; row<7; row++ {
+//                var delay = CCTime(column*row/49)
+//                
+//                var ingredient = state.randomAvailableIngredient()
+//                var tile = Tile.tileFromIngredient(ingredient)
+//                tile.isNewTile = false
+//                _grid.addTileToGrid(tile, atColumn: column, atRow: row)
+//                //self.scheduleBlock(^{}, delay: delay)
+//            }
+//        }
+        _grid.settleTiles()
     }
     
 

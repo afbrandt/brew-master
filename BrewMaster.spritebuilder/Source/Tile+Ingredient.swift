@@ -31,15 +31,25 @@ extension Tile {
         var color: CCColor
         switch(ingredient) {
             case .Leaf:
-                color = CCColor(red: 1, green: 0, blue: 0, alpha: 1)
+                color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+                var sprite = CCBReader.load("Entity/Beer") as! CCSprite
+                tile.addChild(sprite)
             case .Flower:
-                color = CCColor(red: 0, green: 1, blue: 0, alpha: 1)
+                color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+                var sprite = CCBReader.load("Entity/Wine") as! CCSprite
+                tile.addChild(sprite)
             case .Stem:
-                color = CCColor(red: 0, green: 0, blue: 1, alpha: 1)
+                color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+                var sprite = CCBReader.load("Entity/Whisky") as! CCSprite
+                tile.addChild(sprite)
             case .Earth:
-                color = CCColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+                color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+                var sprite = CCBReader.load("Entity/Champagne") as! CCSprite
+                tile.addChild(sprite)
             case .Fruit:
-                color = CCColor(red: 0.8, green: 0.8, blue: 0, alpha: 1)
+                color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+                var sprite = CCBReader.load("Entity/Martini") as! CCSprite
+                tile.addChild(sprite)
         }
         tile._background.color = color
         tile.contents = ingredient

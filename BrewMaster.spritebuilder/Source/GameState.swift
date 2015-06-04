@@ -13,7 +13,8 @@ var currentState: GameState!
 class GameState: NSObject {
    
     //TODO: - Swift 1.2 implement as native Set
-    var availableIngredients: [Ingredient]! = [.Leaf, .Flower, .Stem, .Fruit, .Earth]
+    var availableIngredients: [Ingredient] = [.Leaf, .Flower, .Stem, .Fruit, .Earth]
+    let audioMgr: OALSimpleAudio = OALSimpleAudio.sharedInstance()
     
     //Some tomfoolery to implement singletion pattern
     class var sharedInstance: GameState {
@@ -24,7 +25,9 @@ class GameState: NSObject {
     }
     
     func randomAvailableIngredient() -> Ingredient {
-        var index = Int(rand()) % availableIngredients.count
+        //let seed = UInt32(NSDate().timeIntervalSinceReferenceDate)
+        //var index = Int(srand(seed)) % availableIngredients.count
+        var index = Int(arc4random_uniform(5))
         return availableIngredients[index]
     }
 }

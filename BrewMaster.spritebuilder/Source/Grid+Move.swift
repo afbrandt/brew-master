@@ -11,6 +11,7 @@ import Foundation
 extension Grid {
 
     func swapTouchTileWithTile(tile: Tile) {
+        self.userInteractionEnabled = false
         //swap grid coordinates
         var tempCoordinate = touchTile.gridCoordinate
         touchTile.gridCoordinate = tile.gridCoordinate
@@ -19,7 +20,7 @@ extension Grid {
         tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = tile
         tiles[touchTile.gridCoordinate.column][touchTile.gridCoordinate.row] = touchTile
         self.animateTileSwap(touchTile, second: tile)
-        self.scheduleOnce(Selector("checkMatch"), delay: 0.5)
+        self.scheduleOnce(Selector("checkMatch"), delay: 0.3)
         //self.checkMatch()
         touchTile = Tile.dummyTile()
     }

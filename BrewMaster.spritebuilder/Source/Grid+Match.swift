@@ -20,6 +20,8 @@ extension Grid {
             var delay = CCActionDelay(duration: 0.5)
             var function = CCActionCallFunc(target: self, selector: Selector("checkMatch"))
             self.runAction(CCActionSequence(array: [delay, function]))
+        } else {
+            self.userInteractionEnabled = true
         }
     }
 
@@ -29,7 +31,7 @@ extension Grid {
             for var column = 0; column < GRID_SIZE; column++ {
                 if let tile1 = tiles[column][row], let tile2 = tiles[column][row+1], let tile3 = tiles[column][row+2] {
                     if tile1.contents == tile2.contents && tile1.contents == tile3.contents {
-                        var newMatch = Match(tiles: [tile1, tile2, tile3])
+                        var newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
                         matched.unionInPlace(newMatch.tiles)
                         var hasMatch = false
                         for var i = 0; i < matches.count; i++ {
@@ -39,13 +41,13 @@ extension Grid {
                                 match.appendTiles(newMatch)
                                 matches[i] = match
                                 hasMatch = true
-                                println("match size \(match.tiles.count)")
+                                //println("match size \(match.tiles.count)")
                             }
                         }
                         if !hasMatch {
                             matches.append(newMatch)
                         }
-                        println("Match found!")
+                        //println("Match found!")
                     }
                 }
             }
@@ -55,7 +57,7 @@ extension Grid {
             for var row = 0; row < GRID_SIZE; row++ {
                 if let tile1 = tiles[column][row], let tile2 = tiles[column+1][row], let tile3 = tiles[column+2][row] {
                     if tile1.contents == tile2.contents && tile1.contents == tile3.contents {
-                        var newMatch = Match(tiles: [tile1, tile2, tile3])
+                        var newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
                         matched.unionInPlace(newMatch.tiles)
                         var hasMatch = false
                         for var i = 0; i < matches.count; i++ {
@@ -65,18 +67,18 @@ extension Grid {
                                 match.appendTiles(newMatch)
                                 matches[i] = match
                                 hasMatch = true
-                                println("match size \(match.tiles.count)")
+                                //println("match size \(match.tiles.count)")
                             }
                         }
                         if !hasMatch {
                             matches.append(newMatch)
                         }
-                        println("Match found!")
+                        //println("Match found!")
                     }
                 }
             }
         }
-        println("Finished check!")
+        //println("Finished check!")
         return !matches.isEmpty
     }
     
@@ -88,6 +90,7 @@ extension Grid {
                 tile.removeFromParent()
                 tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = nil
             }
+            
         }
     }
     

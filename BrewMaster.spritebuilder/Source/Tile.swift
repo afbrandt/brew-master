@@ -10,6 +10,7 @@ import UIKit
 
 struct Match {
     var tiles: Set<Tile>
+    var type: IngredientType
     
     func containsTile(tile: Tile) -> Bool {
         return tiles.contains(tile)

@@ -11,6 +11,14 @@ import UIKit
 struct GridCoordinate {
     var row: Int = 0
     var column: Int = 0
+    
+    func isValid() -> Bool {
+        if row == -1 || column == -1 || row >= 7 || column >= 7 {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 //MARK: - Main class, lifecycle related methods
