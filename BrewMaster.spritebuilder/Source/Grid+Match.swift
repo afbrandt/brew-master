@@ -84,13 +84,15 @@ extension Grid {
     
     func clearMatch() {
         for match in matches {
+            var type: String = ""
             for tile in match.tiles {
                 //tile._background.color = CCColor(red: 0, green: 0, blue: 0, alpha: 1)
                 //self.dropTileAbove(tile)
+                type = tile.contents
                 tile.removeFromParent()
                 tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = nil
             }
-            
+            NSNotificationCenter.defaultCenter().postNotificationName(MATCH, object: type)
         }
     }
     

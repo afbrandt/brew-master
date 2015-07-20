@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Dory Studios. All rights reserved.
 //
 
-import UIKit
-
 class Gameplay: CCNode {
     
     //code connected elements
@@ -15,15 +13,36 @@ class Gameplay: CCNode {
     var _gridContainer: CCClippingNode!
     var _gridStencil: CCNode!
     var _bar: Bar!
+    var _scoreLabel: CCLabelTTF!
+    
+    var highScoreValue: CCLabelTTF!
+    var isGameOver: Bool = false
     
     //programmatic elements
     var state: GameState!
+    var score: Int = 0 {
+        didSet {
+            _scoreLabel.string = "\(score)"
+        }
+    }
     
     func didLoadFromCCB() {
         state = GameState.sharedInstance
+        state.currentVenue = "Pub"
         _gridContainer.stencil = _gridStencil
         _gridContainer.alphaThreshold = 0.0
         self.generateGrid()
+    }
+    
+    override func onEnter() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("servedCustomer:"), name: SERVED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gameOver:"), name: GAMEOVER, object: nil)
+        super.onEnter()
+    }
+    
+    override func onExit() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        super.onExit()
     }
     
     func generateGrid() {
@@ -41,5 +60,27 @@ class Gameplay: CCNode {
         _grid.settleTiles()
     }
     
-
+    func servedCustomer(message: NSNotification) {
+        score++
+    }
+    
+    func gameOver(message: NSNotification) {
+        CCDirector.sharedDirector().pause()
+        let recap = CCBReader.load("Recap", owner: self)
+        if score > state.highScore {
+            highScoreValue.string = "\(score)"
+            state.highScore = score
+        } else {
+            highScoreValue.string = "\(state.highScore)"
+        }
+        addChild(recap, z: 100, name: "Recap")
+    }
+    
+    func restart() {
+        CCDirector.sharedDirector().resume()
+        removeChildByName("Recap")
+        let scene = CCBReader.loadAsScene("Gameplay")
+        let transition = CCTransition(fadeWithDuration: 0.5)
+        CCDirector.sharedDirector().replaceScene(scene, withTransition: transition)
+    }
 }

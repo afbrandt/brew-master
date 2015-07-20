@@ -8,9 +8,11 @@
 
 import UIKit
 
+let MATCH: String = "Match Cleared"
+
 struct Match {
     var tiles: Set<Tile>
-    var type: IngredientType
+    var type: String
     
     func containsTile(tile: Tile) -> Bool {
         return tiles.contains(tile)
@@ -28,13 +30,13 @@ class Tile: CCNode {
     var _sprite: CCSprite!
     
     var gridCoordinate: GridCoordinate!
-    var contents: Ingredient!
+    var contents: String!
     var isNewTile: Bool = true
     
     class func dummyTile() -> Tile {
         let tile = CCBReader.load("Tile") as! Tile
         tile.gridCoordinate = GridCoordinate(row: -1, column: -1)
-        tile.contents = .Earth
+        tile.contents = ""
         //tile._background.color = CCColor.whiteColor()
         return tile
     }

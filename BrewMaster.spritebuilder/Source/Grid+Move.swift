@@ -52,7 +52,7 @@ extension Grid {
     func availableTileAbove(coord: GridCoordinate) -> Tile {
         //generate new tile if outside of bounds
         if coord.column >= GRID_SIZE-1 {
-            var newTile = Tile.tileFromIngredient(state.randomAvailableIngredient())
+            var newTile = Tile.tileFromString(state.randomDrink())
             newTile.gridCoordinate = coord
             var columnSpawn = 7+spawnedTiles[coord.row]
             spawnedTiles[coord.row]++

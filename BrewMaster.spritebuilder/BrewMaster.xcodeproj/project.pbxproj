@@ -12,6 +12,7 @@
 		496B68B71B155FA900DEB729 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496B68B61B155FA900DEB729 /* Customer.swift */; };
 		49ADA9B81AD5FB2C00B2E3CC /* Tile+Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ADA9B71AD5FB2C00B2E3CC /* Tile+Ingredient.swift */; };
 		49ADA9BA1AD61B1100B2E3CC /* Grid+Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ADA9B91AD61B1100B2E3CC /* Grid+Match.swift */; };
+		49D1478F1B40AB79006A38A2 /* VenueDetails.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49D1478E1B40AB79006A38A2 /* VenueDetails.plist */; };
 		49F510901ACF9BCB00167711 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F5108F1ACF9BCB00167711 /* Gameplay.swift */; };
 		49F510921ACF9CF500167711 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F510911ACF9CF500167711 /* Tile.swift */; };
 		49F510941ACF9F4B00167711 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F510931ACF9F4A00167711 /* Grid.swift */; };
@@ -164,6 +165,7 @@
 		496B68B61B155FA900DEB729 /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		49ADA9B71AD5FB2C00B2E3CC /* Tile+Ingredient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tile+Ingredient.swift"; path = "Source/Tile+Ingredient.swift"; sourceTree = "<group>"; };
 		49ADA9B91AD61B1100B2E3CC /* Grid+Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Grid+Match.swift"; path = "Source/Grid+Match.swift"; sourceTree = "<group>"; };
+		49D1478E1B40AB79006A38A2 /* VenueDetails.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = VenueDetails.plist; path = Source/VenueDetails.plist; sourceTree = "<group>"; };
 		49F5108F1ACF9BCB00167711 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Gameplay.swift; path = Source/Gameplay.swift; sourceTree = "<group>"; };
 		49F510911ACF9CF500167711 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = Source/Tile.swift; sourceTree = "<group>"; };
 		49F510931ACF9F4A00167711 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Grid.swift; path = Source/Grid.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				49F510951AD06D6D00167711 /* Grid */,
 				49ADA9B41AD5FAFC00B2E3CC /* Tile */,
 				D352B48019EC608A00829775 /* MetalShaders */,
+				49D1478E1B40AB79006A38A2 /* VenueDetails.plist */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
+				49D1478F1B40AB79006A38A2 /* VenueDetails.plist in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,

@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct IngredientProperties {
-    
-}
-
 enum IngredientType: Int {
     case Leaf
     case Flower
@@ -52,8 +48,21 @@ extension Tile {
                 tile.addChild(sprite)
         }
         tile._background.color = color
-        tile.contents = ingredient
+        //tile.contents = ingredient
         return tile
+    }
+    
+    //String refers to the 
+    class func tileFromString(string: String) -> Tile {
+        
+        var tile = CCBReader.load("Tile") as! Tile
+        let sprite = CCBReader.load("Entity/\(string)") as! CCSprite
+        tile._background.color = CCColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        tile._sprite = sprite
+        tile.contents = string
+        tile.addChild(sprite)
+        return tile
+    
     }
     
 }

@@ -45,7 +45,6 @@ extension Grid {
         let columnDiff = y / width as Int
         let column = (y - columnDiff) / height
         return GridCoordinate(row: row, column: column)
-        
     }
     
     func pointFromGridCoordinate(coord: GridCoordinate) -> CGPoint {
