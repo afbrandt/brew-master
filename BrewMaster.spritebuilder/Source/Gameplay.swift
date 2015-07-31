@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Dory Studios. All rights reserved.
 //
 
+let RECAP_DRAW_ORDER = 30
+let BAR_DRAW_ORDER = 20
+let CUSTOMER_DRAW_ORDER = 10
+
 class Gameplay: CCNode {
     
     //code connected elements
@@ -73,7 +77,7 @@ class Gameplay: CCNode {
         } else {
             highScoreValue.string = "\(state.highScore)"
         }
-        addChild(recap, z: 100, name: "Recap")
+        addChild(recap, z: RECAP_DRAW_ORDER, name: "Recap")
     }
     
     func restart() {

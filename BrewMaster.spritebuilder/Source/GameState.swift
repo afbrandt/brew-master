@@ -37,7 +37,6 @@ class GameState: NSObject {
             }
         }
     }
-    
 
     //Some tomfoolery to implement singletion pattern
     class var sharedInstance: GameState {
@@ -52,10 +51,7 @@ class GameState: NSObject {
         //var index = Int(srand(seed)) % availableIngredients.count
         var index = Int(arc4random_uniform(5))
         return availableIngredients[index]
-        
     }
-    
-    
     
     func randomDrink() -> String {
         let index = Int(CCRANDOM_0_1() * Float(currentDrinkTypes.count))

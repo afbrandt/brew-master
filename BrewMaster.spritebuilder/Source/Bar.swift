@@ -9,11 +9,14 @@
 import Foundation
 
 let SERVED: String = "Served Customer"
+let EMPTY_BAR: String = "Empty Bar"
 
 class Bar: CCNode {
 
     var _spawnNode: CCNode!
     var _gameEndNode: CCNode!
+    var counter: CCNode!
+    
     static var gameEndPoint: CGPoint = CGPointMake(0,0)
     
     let state = GameState.sharedInstance
@@ -21,12 +24,14 @@ class Bar: CCNode {
     
     var timeSinceSpawn: Double = 0.0
     var spawnDelay: Double = 5.0
+    var emptyBar: Int = 0
     
     override func onEnter() {
         super.onEnter()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("checkMatch:"), name: MATCH, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gameOver:"), name: GAMEOVER, object: nil)
         Bar.gameEndPoint = _gameEndNode.positionInPoints
+        counter.zOrder = BAR_DRAW_ORDER
     }
     
     override func onExit() {
@@ -35,7 +40,7 @@ class Bar: CCNode {
     }
     
     override func update(dt: CCTime) {
-        timeSinceSpawn += dt
+        //timeSinceSpawn += dt
         
         if (timeSinceSpawn > spawnDelay) {
             println("spawn something")
@@ -45,6 +50,7 @@ class Bar: CCNode {
         
         if waitingCustomers.count == 0 {
             spawnCustomer()
+            emptyBar++
             spawnDelay -= 0.2
         }
     }
@@ -84,7 +90,6 @@ class Bar: CCNode {
     }
     
     func gameOver(message: NSNotification) {
-        //TODO: Notify Gameplay scene
         let customer = message.object as! Customer
         waitingCustomers.remove(customer)
         self.removeChild(customer)
