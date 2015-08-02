@@ -23,7 +23,7 @@ class Bar: CCNode {
     var waitingCustomers: Set<Customer> = []
     
     var timeSinceSpawn: Double = 0.0
-    var spawnDelay: Double = 5.0
+    var spawnDelay: Double = 3.5
     var emptyBar: Int = 0
     
     override func onEnter() {
@@ -40,7 +40,7 @@ class Bar: CCNode {
     }
     
     override func update(dt: CCTime) {
-        //timeSinceSpawn += dt
+        timeSinceSpawn += dt
         
         if (timeSinceSpawn > spawnDelay) {
             println("spawn something")
@@ -49,18 +49,29 @@ class Bar: CCNode {
         }
         
         if waitingCustomers.count == 0 {
-            spawnCustomer()
+            spawnCustomerWithOffset(10.0)
+            spawnCustomerWithOffset(45.0)
+            spawnCustomerWithOffset(70.0)
             emptyBar++
-            spawnDelay -= 0.2
+            spawnDelay *= 0.98
         }
     }
     
     func spawnCustomer() {
+        let randomOffset = CGFloat(CCRANDOM_0_1() * 100)
+        spawnCustomerWithOffset(randomOffset)
+    }
+    
+    func spawnCustomerWithOffset(offset: CGFloat) {
         let customer = Customer.customerWithOrder(state.randomDrink())
-        customer.positionInPoints = _spawnNode.positionInPoints
+        customer.positionInPoints = ccpAdd(_spawnNode.positionInPoints, ccp(-70.0, 0.0))
+        let action = CCActionMoveTo(duration: 1.0, position: ccpAdd(_spawnNode.positionInPoints, ccp(offset, 0.0)))
+        let actionFinished = CCActionCallFunc(target: customer, selector: Selector("actionFinished"))
+        let moveSequence = CCActionSequence(array: [action, actionFinished])
         //customer.drinkOrder = "Beer"
         self.addChild(customer)
         waitingCustomers.insert(customer)
+        customer.runAction(moveSequence)
     }
     
     func checkMatch(message: NSNotification) {
@@ -70,7 +81,7 @@ class Bar: CCNode {
         //println(string)
         //checks for customer to serve based on match
         for customer in waitingCustomers {
-            if customer.drinkOrder == matchString {
+            if customer.drinkOrder == matchString && customer.state != .Spawning {
                 var distance = ccpDistance(Bar.gameEndPoint, customer.positionInPoints)
                 if distance < closestDistance {
                     closestCustomer = customer
@@ -86,6 +97,7 @@ class Bar: CCNode {
             self.removeChild(customer)
             waitingCustomers.remove(customer)
             NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
+            timeSinceSpawn += 1.0
         }
     }
     

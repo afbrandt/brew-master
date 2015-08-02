@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Dory Studios. All rights reserved.
 //
 
-var currentState: GameState!
 let HIGHSCORE: String = "High Score"
 
 class GameState: NSObject {
@@ -16,6 +15,7 @@ class GameState: NSObject {
     
     var currentDrinkTypes: [String] = []
     var currentCustomerTypes: [String] = []
+    var customerSpawnCap: Int = 0
     
     let audioMgr: OALSimpleAudio = OALSimpleAudio.sharedInstance()
     
@@ -34,6 +34,7 @@ class GameState: NSObject {
                 let details = src?[currentVenue] as! NSDictionary
                 currentDrinkTypes = details["drinks"] as! [String]
                 currentCustomerTypes = details["customers"] as! [String]
+                customerSpawnCap = details["spawnCap"] as! Int
             }
         }
     }

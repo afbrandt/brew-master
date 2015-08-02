@@ -11,16 +11,20 @@ import Foundation
 let GAMEOVER: String = "Game Over"
 
 enum CustomerState {
-    case Ordering, Moving, Drinking, Idle, Angry
+    case Spawning, Ordering, Moving, Drinking, Idle, Angry
 }
 
 class Customer: CCNode {
 
     let gameState: GameState = GameState.sharedInstance
-    var state: CustomerState = .Idle
+    var state: CustomerState = .Spawning
     var timeWaiting: Double = 0.0
     var actionDelay: Double = 1.0
-    var orderChance: Float = 0.7
+    var orderChance: Float = 0.4 {
+        didSet {
+            orderChance = clampf(orderChance, 0.2, 0.8)
+        }
+    }
     
     var moveDistance: Double = 14.0
     var drinkOrder: String = ""
@@ -36,46 +40,50 @@ class Customer: CCNode {
         return customer
     }
 
-    func didLoadFromCCB() {
+    override func onEnter() {
+        super.onEnter()
         actionDelay = Double(CCRANDOM_0_1() + 0.5)
+        setChance()
+        
+        //CCActionEaseIn(action: CCActionMoveBy(duration: 1.0, position: ccp(0,0)), rate: 1.0)
     }
     
     override func update(dt: CCTime) {
         timeWaiting += dt
         
         switch state {
-            case .Idle:
-                if (timeWaiting > actionDelay) {
-                    timeWaiting = 0
-                    if CCRANDOM_0_1() > orderChance {
-                        move()
-                    } else {
-                        orderChance -= 0.02
-                        order()
-                    }
+        case .Idle:
+            if (timeWaiting > actionDelay) {
+                timeWaiting = 0
+                if CCRANDOM_0_1() > orderChance {
+                    orderChance += 0.05
+                    move()
+                } else {
+                    order()
                 }
-            case .Moving:
-                if (self.boundingBox().contains(Bar.gameEndPoint)) {
-                    //println("left the scene!")
-                    //self.removeFromParent()
-                    NSNotificationCenter.defaultCenter().postNotificationName(GAMEOVER, object: self)
+            }
+        case .Moving:
+            if (self.boundingBox().contains(Bar.gameEndPoint)) {
+                //println("left the scene!")
+                //self.removeFromParent()
+                NSNotificationCenter.defaultCenter().postNotificationName(GAMEOVER, object: self)
+            }
+        case .Ordering, .Spawning:
+            timeWaiting = 0.0
+        case .Drinking:
+            if (timeWaiting > actionDelay) {
+                drink()
+            }
+        case .Angry:
+            if (timeWaiting > actionDelay/2) {
+                timeWaiting = 0
+                if CCRANDOM_0_1() > orderChance {
+                    move()
+                    orderChance += 0.1
+                } else {
+                    order()
                 }
-            case .Ordering:
-                timeWaiting = 0.0
-            case .Drinking:
-                if (timeWaiting > actionDelay) {
-                    drink()
-                }
-            case .Angry:
-                if (timeWaiting > actionDelay/2) {
-                    timeWaiting = 0
-                    if CCRANDOM_0_1() > orderChance {
-                        move()
-                    } else {
-                        order()
-                        orderChance -= 0.1
-                    }
-                }
+            }
         }
     }
     
@@ -90,10 +98,12 @@ class Customer: CCNode {
     
     func order() {
         animationManager.runAnimationsForSequenceNamed("ShowOrder")
+        orderChance -= 0.3
         state = .Ordering
     }
     
     func drink() {
+        //TODO: Missing timeline - Drink
         animationManager.runAnimationsForSequenceNamed("ShowDrink")
         state = .Drinking
     }
@@ -108,8 +118,36 @@ class Customer: CCNode {
             } else {
                 state = .Idle
             }
-        default:
-            println("")
+            setChance()
+        case .Ordering:
+            state = .Idle
+        case .Drinking:
+            if CCRANDOM_0_1() > 0.5 {
+                //TODO: Missing timeline - Finish
+                animationManager.runAnimationsForSequenceNamed("ShowFinish")
+            }
+        case .Idle:
+            //do nothing
+            animationManager.runAnimationsForSequenceNamed("ShowIdle")
+        case .Angry:
+            //do nothing, angrily
+            //TODO: Missing timeline - Angry
+            animationManager.runAnimationsForSequenceNamed("ShowAngry")
+        case .Spawning:
+            order()
+        }
+    }
+    
+    func setChance() {
+        var score = Gameplay.unsafeScore
+        if score < 30 {
+            orderChance = 0.6
+        } else if score < 60 {
+            orderChance = 0.5
+        } else if score < 90 {
+            orderChance = 0.4
+        } else {
+            orderChance = 0.3
         }
     }
 }

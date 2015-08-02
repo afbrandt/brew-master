@@ -17,6 +17,8 @@
 			<string>Wine</string>
 			<string>Beer</string>
 		</array>
+		<key>spawnCap</key>
+		<integer>10</integer>
 	</dict>
 </dict>
 </plist>
