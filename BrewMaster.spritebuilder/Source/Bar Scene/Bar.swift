@@ -16,6 +16,7 @@ class Bar: CCNode {
     var _spawnNode: CCNode!
     var _gameEndNode: CCNode!
     var counter: CCNode!
+    var bartender: Bartender!
     
     static var gameEndPoint: CGPoint = CGPointMake(0,0)
     
@@ -40,7 +41,7 @@ class Bar: CCNode {
     }
     
     override func update(dt: CCTime) {
-        timeSinceSpawn += dt
+        //timeSinceSpawn += dt
         
         if (timeSinceSpawn > spawnDelay) {
             println("spawn something")
@@ -94,9 +95,10 @@ class Bar: CCNode {
         }
         //removes served customer, if exists
         if let customer = closestCustomer {
-            self.removeChild(customer)
+//            self.removeChild(customer)
             waitingCustomers.remove(customer)
-            NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
+//            NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
+            bartender.pendingOrders.append(customer)
             timeSinceSpawn += 1.0
         }
     }

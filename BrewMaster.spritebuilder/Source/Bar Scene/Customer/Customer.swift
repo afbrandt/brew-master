@@ -11,7 +11,7 @@ import Foundation
 let GAMEOVER: String = "Game Over"
 
 enum CustomerState {
-    case Spawning, Ordering, Moving, Drinking, Idle, Angry
+    case Spawning, Ordering, Moving, Drinking, Idle, Angry, Waiting
 }
 
 class Customer: CCNode {
@@ -48,6 +48,12 @@ class Customer: CCNode {
         //CCActionEaseIn(action: CCActionMoveBy(duration: 1.0, position: ccp(0,0)), rate: 1.0)
     }
     
+    override func onExit() {
+        NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
+        println("another satisfied customer")
+        super.onExit()
+    }
+    
     override func update(dt: CCTime) {
         timeWaiting += dt
         
@@ -68,11 +74,11 @@ class Customer: CCNode {
                 //self.removeFromParent()
                 NSNotificationCenter.defaultCenter().postNotificationName(GAMEOVER, object: self)
             }
-        case .Ordering, .Spawning:
+        case .Ordering, .Spawning, .Waiting:
             timeWaiting = 0.0
         case .Drinking:
             if (timeWaiting > actionDelay) {
-                drink()
+                //drink()
             }
         case .Angry:
             if (timeWaiting > actionDelay/2) {
@@ -102,12 +108,6 @@ class Customer: CCNode {
         state = .Ordering
     }
     
-    func drink() {
-        //TODO: Missing timeline - Drink
-        animationManager.runAnimationsForSequenceNamed("ShowDrink")
-        state = .Drinking
-    }
-    
     func actionFinished() {
         switch state {
         case .Moving:
@@ -122,10 +122,11 @@ class Customer: CCNode {
         case .Ordering:
             state = .Idle
         case .Drinking:
-            if CCRANDOM_0_1() > 0.5 {
-                //TODO: Missing timeline - Finish
+            //if CCRANDOM_0_1() > 0.5 {
+                println("finished drinking")
                 animationManager.runAnimationsForSequenceNamed("ShowFinish")
-            }
+                //removeFromParent()
+            //}
         case .Idle:
             //do nothing
             animationManager.runAnimationsForSequenceNamed("ShowIdle")
@@ -135,6 +136,8 @@ class Customer: CCNode {
             animationManager.runAnimationsForSequenceNamed("ShowAngry")
         case .Spawning:
             order()
+        case .Waiting:
+            drink()
         }
     }
     
@@ -149,5 +152,24 @@ class Customer: CCNode {
         } else {
             orderChance = 0.3
         }
+    }
+    
+    func catchDrink(drink: CCSprite) {
+        let dist = ccpSub(drink.positionInPoints, self.positionInPoints)
+        drink.positionInPoints = dist
+        addChild(drink)
+        println("served")
+        println(dist)
+        let slide = CCActionMoveTo(duration: 0.2, position: CGPointZero)
+        let slideFinished = CCActionCallFunc(target: self, selector: Selector("actionFinished"))
+        let slideSequence = CCActionSequence(array: [slide, slideFinished])
+        drink.runAction(slideSequence)
+        state = .Waiting
+    }
+    
+    func drink() {
+        animationManager.runAnimationsForSequenceNamed("ShowDrink")
+        timeWaiting = 0.0
+        state = .Drinking
     }
 }
