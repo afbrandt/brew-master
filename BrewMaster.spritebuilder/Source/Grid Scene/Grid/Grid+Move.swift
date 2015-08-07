@@ -8,6 +8,8 @@
 
 import Foundation
 
+let SETTLED = "Settled tiles..."
+
 extension Grid {
 
     func swapTouchTileWithTile(tile: Tile) {
@@ -20,22 +22,37 @@ extension Grid {
         tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = tile
         tiles[touchTile.gridCoordinate.column][touchTile.gridCoordinate.row] = touchTile
         self.animateTileSwap(touchTile, second: tile)
-        self.scheduleOnce(Selector("checkMatch"), delay: 0.3)
+        //self.scheduleOnce(Selector("checkMatch"), delay: 0.3)
         //self.checkMatch()
         touchTile = Tile.dummyTile()
     }
     
     func settleTiles() {
+        var longestSettle: Double = 0.0
         for var column = 0; column < GRID_SIZE; column++ {
             for var row = 0; row < GRID_SIZE; row++ {
                 if tiles[column][row] == nil {
-                    self.dropTileAbove(GridCoordinate(row:row, column:column))
+                    //returns length of drop
+                    let time: Double = self.dropTileAbove(GridCoordinate(row:row, column:column))
+                    if time > longestSettle {
+                        longestSettle = time
+                    }
                 }
             }
         }
+        
+        if longestSettle > 0.0 {
+            let delay = CCActionDelay(duration: longestSettle)
+            let chainCall = CCActionCallBlock(block: { () -> Void in
+                NSNotificationCenter.defaultCenter().postNotificationName(SETTLED, object: nil)
+            })
+            let sequence = CCActionSequence(array: [delay, chainCall])
+            runAction(sequence)
+        }
+        
     }
     
-    func dropTileAbove(coord: GridCoordinate) {
+    func dropTileAbove(coord: GridCoordinate) -> Double{
         var tileAbove = self.availableTileAbove(coord)
         //replace array index of tile's original location
         if !tileAbove.isNewTile {
@@ -46,7 +63,7 @@ extension Grid {
         //update tile to drop
         tileAbove.gridCoordinate = coord
         tiles[tileAbove.gridCoordinate.column][tileAbove.gridCoordinate.row] = tileAbove
-        self.animateTile(tileAbove, toGridCoordinate: tileAbove.gridCoordinate)
+        return self.animateTile(tileAbove, toGridCoordinate: tileAbove.gridCoordinate, notify: false)
     }
     
     func availableTileAbove(coord: GridCoordinate) -> Tile {

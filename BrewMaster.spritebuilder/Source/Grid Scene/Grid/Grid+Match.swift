@@ -8,18 +8,20 @@
 
 import Foundation
 
+let CLEARED = "Tiles cleared!"
+
 extension Grid {
 
     func checkMatch() {
         if self.hasMatch() {
             self.clearMatch()
-            self.settleTiles()
-            matches.removeAll(keepCapacity: false)
+//            self.settleTiles()
+//            matches.removeAll(keepCapacity: false)
             matched.removeAll(keepCapacity: false)
             spawnedTiles = [Int](count: 7, repeatedValue:0)
-            var delay = CCActionDelay(duration: 0.5)
-            var function = CCActionCallFunc(target: self, selector: Selector("checkMatch"))
-            self.runAction(CCActionSequence(array: [delay, function]))
+//            var delay = CCActionDelay(duration: 0.5)
+//            var function = CCActionCallFunc(target: self, selector: Selector("checkMatch"))
+//            self.runAction(CCActionSequence(array: [delay, function]))
         } else {
             self.userInteractionEnabled = true
         }
@@ -83,16 +85,43 @@ extension Grid {
     }
     
     func clearMatch() {
-        for match in matches {
+        var clearActions: [CCActionFiniteTime] = []
+        //for match in matches {
+        if !matches.isEmpty {
+            let match = matches.removeLast()
             var type: String = ""
+            var spawnArr: [CCActionFiniteTime] = []
             for tile in match.tiles {
                 //tile._background.color = CCColor(red: 0, green: 0, blue: 0, alpha: 1)
                 //self.dropTileAbove(tile)
                 type = tile.contents
-                tile.removeFromParent()
+                
+                //do more than just remove, gotta a-ni-mate
+                var block = CCActionCallBlock(block: { () -> Void in
+                    tile.remove()
+                })
+                //clearActions.append(block)
+                spawnArr.append(block)
+                //tile.removeFromParent()
                 tiles[tile.gridCoordinate.column][tile.gridCoordinate.row] = nil
             }
+            let spawnSequence = CCActionSpawn(array: spawnArr)
+            clearActions.append(spawnSequence)
+            let delay = CCActionDelay(duration: TILE_CLEAR_TIME)
+            clearActions.append(delay)
             NSNotificationCenter.defaultCenter().postNotificationName(MATCH, object: type)
+        }
+        
+        if !clearActions.isEmpty {
+            let notify = CCActionCallBlock(block: { () -> Void in
+                NSNotificationCenter.defaultCenter().postNotificationName(CLEARED, object: nil)
+            })
+            clearActions.append(notify)
+            let sequence = CCActionSequence(array: clearActions)
+            runAction(sequence)
+        } else {
+            NSNotificationCenter.defaultCenter().postNotificationName(FINISHED, object: nil)
+            self.userInteractionEnabled = true
         }
     }
     

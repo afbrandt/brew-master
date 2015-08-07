@@ -8,6 +8,9 @@
 
 import UIKit
 
+let MOVED = "Moved tiles..."
+let FINISHED = "Finished clearing tiles!"
+
 struct GridCoordinate {
     var row: Int = 0
     var column: Int = 0
@@ -44,6 +47,13 @@ class Grid: CCNode {
         state = GameState.sharedInstance
         self.setupGrid()
         self.userInteractionEnabled = true
+        
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: Selector("settleTiles"), name: FINISHED, object: nil)
+        center.addObserver(self, selector: Selector("clearMatch"), name: CLEARED, object: nil)
+        
+        center.addObserver(self, selector: Selector("checkMatch"), name: MOVED, object: nil)
+        center.addObserver(self, selector: Selector("checkMatch"), name: SETTLED, object: nil)
     }
     
     func setupGrid() {
@@ -65,7 +75,7 @@ class Grid: CCNode {
         var spawnCoordinate = GridCoordinate(row: coordinate.row, column: 8)
         tile.position = self.pointFromGridCoordinate(spawnCoordinate)
         tile.gridCoordinate = coordinate
-        self.animateTile(tile, toGridCoordinate: coordinate)
+        self.animateTile(tile, toGridCoordinate: coordinate, notify: false)
     }
     
 }

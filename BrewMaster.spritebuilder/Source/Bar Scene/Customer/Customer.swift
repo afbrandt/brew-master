@@ -93,21 +93,6 @@ class Customer: CCNode {
         }
     }
     
-    func move() {
-        state = .Moving
-        let distance = CGPointMake(CGFloat(moveDistance + Double(10.0 * CCRANDOM_0_1())), CGFloat(0.0))
-        let move = CCActionMoveBy(duration: 0.1, position: distance)
-        let finishedMove = CCActionCallFunc(target: self, selector: Selector("actionFinished"))
-        let moveSequence = CCActionSequence(array: [move, finishedMove])
-        self.runAction(moveSequence)
-    }
-    
-    func order() {
-        animationManager.runAnimationsForSequenceNamed("ShowOrder")
-        orderChance -= 0.3
-        state = .Ordering
-    }
-    
     func actionFinished() {
         switch state {
         case .Moving:
@@ -171,5 +156,20 @@ class Customer: CCNode {
         animationManager.runAnimationsForSequenceNamed("ShowDrink")
         timeWaiting = 0.0
         state = .Drinking
+    }
+    
+    func order() {
+        animationManager.runAnimationsForSequenceNamed("ShowOrder")
+        orderChance -= 0.3
+        state = .Ordering
+    }
+    
+    func move() {
+        state = .Moving
+        let distance = CGPointMake(CGFloat(moveDistance + Double(10.0 * CCRANDOM_0_1())), CGFloat(0.0))
+        let move = CCActionMoveBy(duration: 0.1, position: distance)
+        let finishedMove = CCActionCallFunc(target: self, selector: Selector("actionFinished"))
+        let moveSequence = CCActionSequence(array: [move, finishedMove])
+        self.runAction(moveSequence)
     }
 }

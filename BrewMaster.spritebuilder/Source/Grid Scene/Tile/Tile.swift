@@ -9,6 +9,7 @@
 import UIKit
 
 let MATCH: String = "Match Cleared"
+let TILE_CLEAR_TIME = 0.25
 
 struct Match {
     var tiles: Set<Tile>
@@ -37,8 +38,20 @@ class Tile: CCNode {
         let tile = CCBReader.load("Tile") as! Tile
         tile.gridCoordinate = GridCoordinate(row: -1, column: -1)
         tile.contents = ""
+        tile.cascadeOpacityEnabled = true
+        tile.opacity = 1.0
         //tile._background.color = CCColor.whiteColor()
         return tile
+    }
+    
+    func remove() {
+        var grow = CCActionScaleBy(duration: TILE_CLEAR_TIME, scale: 1.2)
+        var fade = CCActionFadeOut(duration: TILE_CLEAR_TIME)
+        var combo = CCActionSpawn(array: [grow, fade])
+        var remove = CCActionRemove()
+        var tileAction = CCActionSequence(array: [combo, remove])
+        zOrder = 100
+        runAction(tileAction)
     }
 }
 
