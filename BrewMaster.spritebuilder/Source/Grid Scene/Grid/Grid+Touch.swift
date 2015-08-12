@@ -52,6 +52,10 @@ extension Grid {
         //finishedMove()
     }
     
+    override func touchCancelled(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+        
+    }
+    
     func gridCoordinateFromPoint(point: CGPoint) -> GridCoordinate {
         let x = Int(point.x)
         let y = Int(point.y)

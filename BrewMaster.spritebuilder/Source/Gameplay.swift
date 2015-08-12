@@ -65,7 +65,8 @@ class Gameplay: CCNode {
 //                //self.scheduleBlock(^{}, delay: delay)
 //            }
 //        }
-        _grid.settleTiles()
+//        _grid.settleTiles()
+        _grid.setupNormalGrid()
     }
     
     func servedCustomer(message: NSNotification) {
