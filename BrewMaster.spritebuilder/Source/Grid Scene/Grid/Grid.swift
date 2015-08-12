@@ -36,6 +36,8 @@ class Grid: CCNode {
     var tileMarginHorizontal: CGFloat = 0
     //Grid+Touch
     var touchTile: Tile!
+    var currentCoordinate: GridCoordinate = GridCoordinate(row: 0, column: 0)
+    var tileOffset: CGPoint = ccp(0, 0)
     //Grid+Match
     var matches: [Match] = [Match]()
     var matched: Set<Tile> = []
@@ -49,11 +51,17 @@ class Grid: CCNode {
         self.userInteractionEnabled = true
         
         let center = NSNotificationCenter.defaultCenter()
+        
         center.addObserver(self, selector: Selector("settleTiles"), name: FINISHED, object: nil)
         center.addObserver(self, selector: Selector("clearMatch"), name: CLEARED, object: nil)
         
         center.addObserver(self, selector: Selector("checkMatch"), name: MOVED, object: nil)
         center.addObserver(self, selector: Selector("checkMatch"), name: SETTLED, object: nil)
+    }
+    
+    override func onExit() {
+        super.onExit()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func setupGrid() {

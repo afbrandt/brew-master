@@ -52,7 +52,7 @@ extension Grid {
         
     }
     
-    func dropTileAbove(coord: GridCoordinate) -> Double{
+    func dropTileAbove(coord: GridCoordinate) -> Double {
         var tileAbove = self.availableTileAbove(coord)
         //replace array index of tile's original location
         if !tileAbove.isNewTile {
@@ -76,6 +76,7 @@ extension Grid {
             var tileSpawnPosition = self.pointFromGridCoordinate(GridCoordinate(row: coord.row, column: columnSpawn))
             //newTile.position = self.pointFromGridCoordinate(coord)
             newTile.position = tileSpawnPosition
+            newTile.zOrder = TILE_NORMAL_ZORDER
             self.addChild(newTile)
             return newTile
         }
@@ -87,5 +88,8 @@ extension Grid {
         }
     }
     
+    func finishedMove() {
+        NSNotificationCenter.defaultCenter().postNotificationName(MOVED, object: nil)
+    }
     
 }

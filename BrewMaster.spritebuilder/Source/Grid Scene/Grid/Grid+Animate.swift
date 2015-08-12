@@ -25,7 +25,7 @@ extension Grid {
             let notice = CCActionCallBlock(block: { () -> Void in
                 NSNotificationCenter.defaultCenter().postNotificationName(MOVED, object: nil)
             })
-            arr.append(notice)
+            //arr.append(notice)
         }
         
         let sequence = CCActionSequence(array: arr)

@@ -14,24 +14,42 @@ extension Grid {
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         let loc = touch.locationInNode(self) as CGPoint
         let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate
+        tileOffset = ccpSub(pointFromGridCoordinate(coord), loc)
+        currentCoordinate = coord
         touchTile = tiles[coord.column][coord.row]
+        touchTile.zOrder = TILE_TOUCH_ZORDER
         //println("touch detected at column: \(coord.column) and row: \(coord.row)")
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         let loc = touch.locationInNode(self) as CGPoint
         let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
+        touchTile.positionInPoints = ccpAdd(loc, tileOffset)
         if touchTile.gridCoordinate.row != -1 && coord.isValid() &&
                 (coord.column != touchTile.gridCoordinate.column ||
                 coord.row != touchTile.gridCoordinate.row) {
             if let tile = tiles[coord.column][coord.row] {
-                self.swapTouchTileWithTile(tile)
+                tile.gridCoordinate = currentCoordinate
+                tiles[coord.column][coord.row] = nil
+                tiles[currentCoordinate.column][currentCoordinate.row] = tile
+                //self.swapTouchTileWithTile(tile)
+                self.animateTile(tile, toGridCoordinate: currentCoordinate, notify: false)
+                currentCoordinate = coord
             }
         }
     }
     
     override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+        let loc = touch.locationInNode(self) as CGPoint
+        let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
+        touchTile.gridCoordinate = coord
+        tiles[currentCoordinate.column][currentCoordinate.row] = touchTile
+        let wait = self.animateTile(touchTile, toGridCoordinate: currentCoordinate, notify: true)
+        touchTile.zOrder = TILE_NORMAL_ZORDER
         touchTile = Tile.dummyTile()
+        
+        scheduleOnce(Selector("finishedMove"), delay: wait)
+        //finishedMove()
     }
     
     func gridCoordinateFromPoint(point: CGPoint) -> GridCoordinate {
