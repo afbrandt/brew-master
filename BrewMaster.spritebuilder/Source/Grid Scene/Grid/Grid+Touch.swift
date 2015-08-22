@@ -42,13 +42,13 @@ extension Grid {
     override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         let loc = touch.locationInNode(self) as CGPoint
         let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
-        touchTile.gridCoordinate = coord
+        touchTile.gridCoordinate = currentCoordinate
         tiles[currentCoordinate.column][currentCoordinate.row] = touchTile
         let wait = self.animateTile(touchTile, toGridCoordinate: currentCoordinate, notify: true)
         touchTile.zOrder = TILE_NORMAL_ZORDER
         touchTile = Tile.dummyTile()
         
-        scheduleOnce(Selector("finishedMove"), delay: wait)
+        scheduleOnce(Selector("finishedMove"), delay: wait*2.0)
         //finishedMove()
     }
     

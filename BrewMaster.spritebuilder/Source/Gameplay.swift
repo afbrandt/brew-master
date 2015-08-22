@@ -6,10 +6,6 @@
 //  Copyright (c) 2015 Dory Studios. All rights reserved.
 //
 
-let RECAP_DRAW_ORDER = 30
-let BAR_DRAW_ORDER = 20
-let CUSTOMER_DRAW_ORDER = 10
-
 class Gameplay: CCNode {
     
     //code connected elements
@@ -50,6 +46,7 @@ class Gameplay: CCNode {
     
     override func onExit() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        
         super.onExit()
     }
     

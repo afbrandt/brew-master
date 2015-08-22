@@ -8,12 +8,6 @@
 
 import UIKit
 
-let MATCH: String = "Match Cleared"
-let TILE_CLEAR_TIME = 0.25
-
-let TILE_NORMAL_ZORDER = 15
-let TILE_TOUCH_ZORDER = 30
-
 struct Match {
     var tiles: Set<Tile>
     var type: String

@@ -8,8 +8,6 @@
 
 import Foundation
 
-let SETTLED = "Settled tiles..."
-
 extension Grid {
 
     func swapTouchTileWithTile(tile: Tile) {

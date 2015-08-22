@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Dory Studios. All rights reserved.
 //
 
-let HIGHSCORE: String = "High Score"
-
 class GameState: NSObject {
    
     //TODO: - Swift 1.2 implement as native Set

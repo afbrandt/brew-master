@@ -8,9 +8,6 @@
 
 import UIKit
 
-let MOVED = "Moved tiles..."
-let FINISHED = "Finished clearing tiles!"
-
 struct GridCoordinate {
     var row: Int = 0
     var column: Int = 0

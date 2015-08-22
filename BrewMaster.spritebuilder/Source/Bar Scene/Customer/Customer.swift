@@ -8,8 +8,6 @@
 
 import Foundation
 
-let GAMEOVER: String = "Game Over"
-
 enum CustomerState {
     case Spawning, Ordering, Moving, Drinking, Idle, Angry, Waiting
 }

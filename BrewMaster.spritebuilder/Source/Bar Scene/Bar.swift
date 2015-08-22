@@ -8,9 +8,6 @@
 
 import Foundation
 
-let SERVED: String = "Served Customer"
-let EMPTY_BAR: String = "Empty Bar"
-
 class Bar: CCNode {
 
     var _spawnNode: CCNode!

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4917E1101B7BD24600F9D112 /* Grid+Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4917E10F1B7BD24500F9D112 /* Grid+Generate.swift */; };
+		496CA31E1B882A3C003CED79 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CA31D1B882A3C003CED79 /* Constants.swift */; };
 		49994D231B6EDA0500257771 /* Bartender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D221B6EDA0500257771 /* Bartender.swift */; };
 		49994D251B6EDA2200257771 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D241B6EDA2200257771 /* Bar.swift */; };
 		49994D271B6EDA6100257771 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D261B6EDA6100257771 /* Customer.swift */; };
@@ -164,6 +165,7 @@
 
 /* Begin PBXFileReference section */
 		4917E10F1B7BD24500F9D112 /* Grid+Generate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Grid+Generate.swift"; path = "Source/Grid Scene/Grid/Grid+Generate.swift"; sourceTree = "<group>"; };
+		496CA31D1B882A3C003CED79 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Source/Constants.swift; sourceTree = "<group>"; };
 		49994D221B6EDA0500257771 /* Bartender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bartender.swift; path = "Source/Bar Scene/Bartender/Bartender.swift"; sourceTree = "<group>"; };
 		49994D241B6EDA2200257771 /* Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bar.swift; path = "Source/Bar Scene/Bar.swift"; sourceTree = "<group>"; };
 		49994D261B6EDA6100257771 /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Customer.swift; path = "Source/Bar Scene/Customer/Customer.swift"; sourceTree = "<group>"; };
@@ -508,6 +510,7 @@
 				7A40362019DDEF0D007B6E8F /* Platforms */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				49F5108F1ACF9BCB00167711 /* Gameplay.swift */,
+				496CA31D1B882A3C003CED79 /* Constants.swift */,
 				49F510981AD0702800167711 /* GameState.swift */,
 				496B68B51B155A1300DEB729 /* Bar Scene */,
 				49994D381B6EDACE00257771 /* Grid Scene */,
@@ -892,6 +895,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
+				496CA31E1B882A3C003CED79 /* Constants.swift in Sources */,
 				49994D231B6EDA0500257771 /* Bartender.swift in Sources */,
 				49F510901ACF9BCB00167711 /* Gameplay.swift in Sources */,
 				49994D351B6EDAC500257771 /* Tile.swift in Sources */,
@@ -1207,7 +1211,7 @@
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
 				INFOPLIST_FILE = Source/Resources/Platforms/iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1243,7 +1247,7 @@
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
 				INFOPLIST_FILE = Source/Resources/Platforms/iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-lz",

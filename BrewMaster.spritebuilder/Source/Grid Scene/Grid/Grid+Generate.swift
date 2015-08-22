@@ -10,20 +10,23 @@ import Foundation
 
 extension Grid {
 
-    //Brute force generation of grid using validRandomOrderForCoordinate() to pick order string
+    // Brute force generation of grid using validRandomOrderForCoordinate() to pick order string
     // End result is OK, no pairs together though.
     func setupNormalGrid() {
-        for var row = 0; row < GRID_SIZE; row++ {
-            for var column = 0; column < GRID_SIZE; column++ {
+        for var column = 0; column < GRID_SIZE; column++ {
+            for var row = 0; row < GRID_SIZE; row++ {
                 let coord = GridCoordinate(row: row, column: column)
                 let order = validRandomOrderForCoordinate(coord)
-                let tile = Tile.tileFromString(order)
-                tile.gridCoordinate = coord
-                tile.positionInPoints = pointFromGridCoordinate(coord)
-                tiles[coord.column][coord.row] = tile
+                var tile = Tile.tileFromString(order)
                 addChild(tile)
+                tile.gridCoordinate = coord
+                tile.isNewTile = false
+                tile.position = pointFromGridCoordinate(coord)
+                tiles[coord.column][coord.row] = tile
+//                addTileToGrid(tile, atGridCoordinate: coord)
             }
         }
+        //settleTiles()
     }
     
     // Visits each neighbor tile and ensures order does not match

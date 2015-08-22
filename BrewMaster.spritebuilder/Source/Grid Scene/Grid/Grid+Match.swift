@@ -8,8 +8,6 @@
 
 import Foundation
 
-let CLEARED = "Tiles cleared!"
-
 extension Grid {
 
     func checkMatch() {
