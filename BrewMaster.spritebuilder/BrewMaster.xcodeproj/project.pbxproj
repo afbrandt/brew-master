@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4917E1101B7BD24600F9D112 /* Grid+Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4917E10F1B7BD24500F9D112 /* Grid+Generate.swift */; };
 		496CA31E1B882A3C003CED79 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CA31D1B882A3C003CED79 /* Constants.swift */; };
+		496CA3261B882CF0003CED79 /* Gameplay+Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CA3241B882CF0003CED79 /* Gameplay+Notify.swift */; };
+		496CA3271B882CF0003CED79 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CA3251B882CF0003CED79 /* Gameplay.swift */; };
 		49994D231B6EDA0500257771 /* Bartender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D221B6EDA0500257771 /* Bartender.swift */; };
 		49994D251B6EDA2200257771 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D241B6EDA2200257771 /* Bar.swift */; };
 		49994D271B6EDA6100257771 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D261B6EDA6100257771 /* Customer.swift */; };
@@ -21,7 +23,6 @@
 		49994D361B6EDAC500257771 /* Tile+Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49994D341B6EDAC500257771 /* Tile+Ingredient.swift */; };
 		49B1E3E61B7551C200B575F7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B1E3E51B7551C200B575F7 /* Media.xcassets */; };
 		49D1478F1B40AB79006A38A2 /* VenueDetails.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49D1478E1B40AB79006A38A2 /* VenueDetails.plist */; };
-		49F510901ACF9BCB00167711 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F5108F1ACF9BCB00167711 /* Gameplay.swift */; };
 		49F510991AD0702800167711 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F510981AD0702800167711 /* GameState.swift */; };
 		5B121030197484FA004C1E1D /* BrewMasterActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* BrewMasterActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
@@ -166,6 +167,8 @@
 /* Begin PBXFileReference section */
 		4917E10F1B7BD24500F9D112 /* Grid+Generate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Grid+Generate.swift"; path = "Source/Grid Scene/Grid/Grid+Generate.swift"; sourceTree = "<group>"; };
 		496CA31D1B882A3C003CED79 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Source/Constants.swift; sourceTree = "<group>"; };
+		496CA3241B882CF0003CED79 /* Gameplay+Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gameplay+Notify.swift"; sourceTree = "<group>"; };
+		496CA3251B882CF0003CED79 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		49994D221B6EDA0500257771 /* Bartender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bartender.swift; path = "Source/Bar Scene/Bartender/Bartender.swift"; sourceTree = "<group>"; };
 		49994D241B6EDA2200257771 /* Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bar.swift; path = "Source/Bar Scene/Bar.swift"; sourceTree = "<group>"; };
 		49994D261B6EDA6100257771 /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Customer.swift; path = "Source/Bar Scene/Customer/Customer.swift"; sourceTree = "<group>"; };
@@ -178,7 +181,6 @@
 		49994D341B6EDAC500257771 /* Tile+Ingredient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tile+Ingredient.swift"; path = "Source/Grid Scene/Tile/Tile+Ingredient.swift"; sourceTree = "<group>"; };
 		49B1E3E51B7551C200B575F7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Source/Media.xcassets; sourceTree = "<group>"; };
 		49D1478E1B40AB79006A38A2 /* VenueDetails.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = VenueDetails.plist; path = Source/VenueDetails.plist; sourceTree = "<group>"; };
-		49F5108F1ACF9BCB00167711 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Gameplay.swift; path = Source/Gameplay.swift; sourceTree = "<group>"; };
 		49F510981AD0702800167711 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameState.swift; path = Source/GameState.swift; sourceTree = "<group>"; };
 		5B12100919748273004C1E1D /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = /usr/lib/armv7a/libEGL.so; sourceTree = SDKROOT; };
 		5B12100F197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
@@ -311,6 +313,16 @@
 				49994D241B6EDA2200257771 /* Bar.swift */,
 			);
 			name = "Bar Scene";
+			sourceTree = "<group>";
+		};
+		496CA3231B882CC8003CED79 /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				496CA3241B882CF0003CED79 /* Gameplay+Notify.swift */,
+				496CA3251B882CF0003CED79 /* Gameplay.swift */,
+			);
+			name = Gameplay;
+			path = Source/Gameplay;
 			sourceTree = "<group>";
 		};
 		49994D321B6EDAB000257771 /* Grid */ = {
@@ -509,9 +521,9 @@
 			children = (
 				7A40362019DDEF0D007B6E8F /* Platforms */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
-				49F5108F1ACF9BCB00167711 /* Gameplay.swift */,
 				496CA31D1B882A3C003CED79 /* Constants.swift */,
 				49F510981AD0702800167711 /* GameState.swift */,
+				496CA3231B882CC8003CED79 /* Gameplay */,
 				496B68B51B155A1300DEB729 /* Bar Scene */,
 				49994D381B6EDACE00257771 /* Grid Scene */,
 				D352B48019EC608A00829775 /* MetalShaders */,
@@ -897,14 +909,15 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				496CA31E1B882A3C003CED79 /* Constants.swift in Sources */,
 				49994D231B6EDA0500257771 /* Bartender.swift in Sources */,
-				49F510901ACF9BCB00167711 /* Gameplay.swift in Sources */,
 				49994D351B6EDAC500257771 /* Tile.swift in Sources */,
 				49994D361B6EDAC500257771 /* Tile+Ingredient.swift in Sources */,
 				49994D2E1B6EDAA800257771 /* Grid+Animate.swift in Sources */,
+				496CA3261B882CF0003CED79 /* Gameplay+Notify.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				49994D251B6EDA2200257771 /* Bar.swift in Sources */,
 				49F510991AD0702800167711 /* GameState.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				496CA3271B882CF0003CED79 /* Gameplay.swift in Sources */,
 				4917E1101B7BD24600F9D112 /* Grid+Generate.swift in Sources */,
 				49994D271B6EDA6100257771 /* Customer.swift in Sources */,
 				49994D2D1B6EDAA800257771 /* Grid.swift in Sources */,

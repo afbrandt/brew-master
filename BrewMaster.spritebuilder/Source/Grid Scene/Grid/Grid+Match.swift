@@ -95,9 +95,10 @@ extension Grid {
                 type = tile.contents
                 
                 //do more than just remove, gotta a-ni-mate
-                var block = CCActionCallBlock(block: { () -> Void in
-                    tile.remove()
-                })
+//                var block = CCActionCallBlock(block: { () -> Void in
+//                    tile.remove()
+//                })
+                let block = CCActionCallFunc(target: tile, selector: Selector("remove"))
                 //clearActions.append(block)
                 spawnArr.append(block)
                 //tile.removeFromParent()
