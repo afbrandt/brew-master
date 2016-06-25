@@ -42,12 +42,12 @@ class Tile: CCNode {
     }
     
     func remove() {
-        var grow = CCActionScaleBy(duration: TILE_CLEAR_TIME, scale: 1.2)
-        var fade = CCActionFadeOut(duration: TILE_CLEAR_TIME)
-        var combo = CCActionSpawn(array: [grow, fade])
-        var remove = CCActionRemove()
-        var tileAction = CCActionSequence(array: [combo, remove])
-        zOrder = 100
+        let grow = CCActionScaleBy(duration: TILE_CLEAR_TIME, scale: 1.2)
+        let fade = CCActionFadeOut(duration: TILE_CLEAR_TIME)
+        let combo = CCActionSpawn(array: [grow, fade])
+        let remove = CCActionRemove()
+        let tileAction = CCActionSequence(array: [combo, remove])
+        zOrder = TILE_REMOVE_ZORDER
         runAction(tileAction)
     }
 }

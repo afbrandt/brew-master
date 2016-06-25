@@ -17,7 +17,7 @@ extension Grid {
             for var row = 0; row < GRID_SIZE; row++ {
                 let coord = GridCoordinate(row: row, column: column)
                 let order = validRandomOrderForCoordinate(coord)
-                var tile = Tile.tileFromString(order)
+                let tile = Tile.tileFromString(order)
                 addChild(tile)
                 tile.gridCoordinate = coord
                 tile.isNewTile = false
@@ -32,7 +32,7 @@ extension Grid {
     // Visits each neighbor tile and ensures order does not match
     func validRandomOrderForCoordinate(coordinate: GridCoordinate) -> String {
     
-        var possibleOrders = state.currentDrinkTypes
+        var possibleOrders = gameState.currentDrinkTypes
         let above = GridCoordinate(row: coordinate.row+1, column: coordinate.column)
         let below = GridCoordinate(row: coordinate.row-1, column: coordinate.column)
         let left = GridCoordinate(row: coordinate.row, column: coordinate.column-1)
@@ -41,7 +41,7 @@ extension Grid {
         if above.isValid() {
             if let tile = tiles[above.column][above.row] {
                 let order = tile.contents
-                if let index = find(possibleOrders, order) {
+                if let index = possibleOrders.indexOf(order) {
                     possibleOrders.removeAtIndex(index)
                 }
             }
@@ -50,7 +50,7 @@ extension Grid {
         if below.isValid() {
             if let tile = tiles[below.column][below.row] {
                 let order = tile.contents
-                if let index = find(possibleOrders, order) {
+                if let index = possibleOrders.indexOf(order) {
                     possibleOrders.removeAtIndex(index)
                 }
             }
@@ -59,7 +59,7 @@ extension Grid {
         if left.isValid() {
             if let tile = tiles[left.column][left.row] {
                 let order = tile.contents
-                if let index = find(possibleOrders, order) {
+                if let index = possibleOrders.indexOf(order) {
                     possibleOrders.removeAtIndex(index)
                 }
             }
@@ -68,7 +68,7 @@ extension Grid {
         if right.isValid() {
             if let tile = tiles[right.column][right.row] {
                 let order = tile.contents
-                if let index = find(possibleOrders, order) {
+                if let index = possibleOrders.indexOf(order) {
                     possibleOrders.removeAtIndex(index)
                 }
             }
@@ -79,4 +79,5 @@ extension Grid {
         let order = possibleOrders[index]
         return order
     }
+    
 }

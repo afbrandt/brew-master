@@ -48,7 +48,7 @@ class Customer: CCNode {
     
     override func onExit() {
         NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
-        println("another satisfied customer")
+        print("another satisfied customer")
         super.onExit()
     }
     
@@ -95,7 +95,7 @@ class Customer: CCNode {
         switch state {
         case .Moving:
             if ccpDistance(self.positionInPoints, Bar.gameEndPoint) < 70 {
-                println("closing in!")
+//                print("closing in!")
                 moveDistance = 0
                 state = .Angry
             } else {
@@ -106,7 +106,7 @@ class Customer: CCNode {
             state = .Idle
         case .Drinking:
             //if CCRANDOM_0_1() > 0.5 {
-                println("finished drinking")
+                print("finished drinking")
                 animationManager.runAnimationsForSequenceNamed("ShowFinish")
                 //removeFromParent()
             //}
@@ -125,7 +125,7 @@ class Customer: CCNode {
     }
     
     func setChance() {
-        var score = Gameplay.unsafeScore
+        let score = Gameplay.unsafeScore
         if score < 30 {
             orderChance = 0.6
         } else if score < 60 {
@@ -141,8 +141,8 @@ class Customer: CCNode {
         let dist = ccpSub(drink.positionInPoints, self.positionInPoints)
         drink.positionInPoints = dist
         addChild(drink)
-        println("served")
-        println(dist)
+        //println("served")
+        //println(dist)
         let slide = CCActionMoveTo(duration: 0.2, position: CGPointZero)
         let slideFinished = CCActionCallFunc(target: self, selector: Selector("actionFinished"))
         let slideSequence = CCActionSequence(array: [slide, slideFinished])

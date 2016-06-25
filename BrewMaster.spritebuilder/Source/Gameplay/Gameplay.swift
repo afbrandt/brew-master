@@ -40,8 +40,10 @@ class Gameplay: CCNode {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("servedCustomer:"), name: SERVED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gameOver:"), name: GAMEOVER, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("barCleared"), name: EMPTY_BAR, object: nil)
+        
         super.onEnter()
         _bar._spawnNode.positionInPoints.x = _bar.convertToNodeSpace(spawnNode.positionInPoints).x
+        
     }
     
     override func onExit() {
@@ -67,8 +69,8 @@ class Gameplay: CCNode {
     }
     
     func servedCustomer(message: NSNotification) {
-        score++
-        Gameplay.unsafeScore++
+        score += 1
+        Gameplay.unsafeScore += 1
     }
     
     func gameOver(message: NSNotification) {
@@ -87,7 +89,8 @@ class Gameplay: CCNode {
         CCDirector.sharedDirector().resume()
         removeChildByName("Recap")
         let scene = CCBReader.loadAsScene("Gameplay")
-        let transition = CCTransition(fadeWithDuration: 0.5)
+//        let transition = CCTransition(fadeWithDuration: 0.5)
+        let transition = CCTransition(crossFadeWithDuration: 0.3)
         CCDirector.sharedDirector().replaceScene(scene, withTransition: transition)
     }
     

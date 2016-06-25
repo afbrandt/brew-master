@@ -318,8 +318,8 @@
 		496CA3231B882CC8003CED79 /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
-				496CA3241B882CF0003CED79 /* Gameplay+Notify.swift */,
 				496CA3251B882CF0003CED79 /* Gameplay.swift */,
+				496CA3241B882CF0003CED79 /* Gameplay+Notify.swift */,
 			);
 			name = Gameplay;
 			path = Source/Gameplay;
@@ -694,13 +694,16 @@
 		B77F1B2617B978D7009739AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Dory Studios";
 				TargetAttributes = {
 					7A4035FE19DDEE84007B6E8F = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
 					B77F1B2D17B978D7009739AE = {
+						DevelopmentTeam = WHZ8QVFPRG;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -987,6 +990,7 @@
 					"-ObjC",
 					"-lz",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.BrewMaster;
 				PRODUCT_MODULE_NAME = BrewMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1031,6 +1035,7 @@
 					"-ObjC",
 					"-lz",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.BrewMaster;
 				PRODUCT_MODULE_NAME = BrewMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1079,6 +1084,7 @@
 					"-lgles_apportable",
 					"-landroid",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.BrewMaster;
 				PRODUCT_MODULE_NAME = BrewMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1127,6 +1133,7 @@
 					"-lgles_apportable",
 					"-landroid",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.BrewMaster;
 				PRODUCT_MODULE_NAME = BrewMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1149,6 +1156,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1231,6 +1239,7 @@
 					"-lz",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dorystudios.DrunkCrush;
 				PRODUCT_NAME = BrewMaster;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1266,6 +1275,7 @@
 					"-lz",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dorystudios.DrunkCrush;
 				PRODUCT_NAME = BrewMaster;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";

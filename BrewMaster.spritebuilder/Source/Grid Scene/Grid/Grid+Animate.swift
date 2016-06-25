@@ -14,8 +14,8 @@ extension Grid {
         let endPosition = self.pointFromGridCoordinate(coord)
         //var startPosition = ccpAdd(endPosition, ccp(0,300))
         //tile.position = startPosition
-        var coordDiff = abs((tile.position.y - endPosition.y) / columnHeight)
-        var actionDuration = CCTime(0.06 * (coordDiff + 1))
+        let coordDiff = abs((tile.position.y - endPosition.y) / columnHeight)
+        let actionDuration = CCTime(0.06 * (coordDiff + 1))
         let action = CCActionMoveTo(duration: actionDuration, position: endPosition)
         var arr: [CCActionFiniteTime] = []
         

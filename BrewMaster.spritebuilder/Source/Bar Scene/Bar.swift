@@ -26,7 +26,9 @@ class Bar: CCNode {
     
     override func onEnter() {
         super.onEnter()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("checkMatch:"), name: MATCH, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("regularMatch:"), name: MATCH, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("largeMatch:"), name: LARGE_MATCH, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("superMatch:"), name: SUPER_MATCH, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gameOver:"), name: GAMEOVER, object: nil)
         Bar.gameEndPoint = _gameEndNode.positionInPoints
         counter.zOrder = BAR_DRAW_ORDER
@@ -38,10 +40,10 @@ class Bar: CCNode {
     }
     
     override func update(dt: CCTime) {
-        //timeSinceSpawn += dt
+        timeSinceSpawn += dt
         
         if (timeSinceSpawn > spawnDelay) {
-            println("spawn something")
+            print("spawn something")
             spawnCustomer()
             timeSinceSpawn = 0.0
         }
@@ -50,7 +52,7 @@ class Bar: CCNode {
             spawnCustomerWithOffset(10.0)
             spawnCustomerWithOffset(45.0)
             spawnCustomerWithOffset(70.0)
-            emptyBar++
+            emptyBar += 1
             spawnDelay *= 0.98
         }
     }
@@ -72,15 +74,33 @@ class Bar: CCNode {
         customer.runAction(moveSequence)
     }
     
-    func checkMatch(message: NSNotification) {
+    func regularMatch(message: NSNotification) {
         let matchString = message.object as! String
+        print("regular match")
+        checkMatch(matchString, priority: .Regular)
+    }
+    
+    func largeMatch(message: NSNotification) {
+        let matchString = message.object as! String
+        print("large match")
+        checkMatch(matchString, priority: .Large)
+    }
+    
+    func superMatch(message: NSNotification) {
+        let matchString = message.object as! String
+        print("super match")
+        checkMatch(matchString, priority: .Super)
+    }
+    
+    func checkMatch(matchString: String, priority: MatchPriority) {
+        
         var closestCustomer: Customer! = nil
         var closestDistance: CGFloat = CGFloat.max
         //println(string)
         //checks for customer to serve based on match
         for customer in waitingCustomers {
             if customer.drinkOrder == matchString && customer.state != .Spawning {
-                var distance = ccpDistance(Bar.gameEndPoint, customer.positionInPoints)
+                let distance = ccpDistance(Bar.gameEndPoint, customer.positionInPoints)
                 if distance < closestDistance {
                     closestCustomer = customer
                     closestDistance = distance
@@ -90,13 +110,24 @@ class Bar: CCNode {
                 //break;
             }
         }
+        
         //removes served customer, if exists
         if let customer = closestCustomer {
 //            self.removeChild(customer)
             waitingCustomers.remove(customer)
-//            NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
-            bartender.pendingOrders.append(customer)
             timeSinceSpawn += 1.0
+            
+            switch priority {
+                case .Regular:
+                bartender.pendingOrders.append(customer)
+                case .Large:
+                bartender.pendingOrders.insert(customer, atIndex: 0)
+                checkMatch(matchString, priority: .Regular)
+                case .Super:
+                bartender.pendingOrders.insert(customer, atIndex: 0)
+                checkMatch(matchString, priority: .Super)
+            }
+//            NSNotificationCenter.defaultCenter().postNotificationName(SERVED, object: nil)
         }
     }
     

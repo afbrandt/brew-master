@@ -12,44 +12,82 @@ import Foundation
 extension Grid {
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        let loc = touch.locationInNode(self) as CGPoint
-        let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate
-        tileOffset = ccpSub(pointFromGridCoordinate(coord), loc)
-        currentCoordinate = coord
-        touchTile = tiles[coord.column][coord.row]
-        touchTile.zOrder = TILE_TOUCH_ZORDER
-        //println("touch detected at column: \(coord.column) and row: \(coord.row)")
+        if self.state == .Idle {
+            let loc = touch.locationInNode(self) as CGPoint
+            let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate
+            touchCoordinate = loc
+            tileOffset = ccpSub(pointFromGridCoordinate(coord), loc)
+            currentCoordinate = coord
+            touchTile = tiles[coord.column][coord.row]
+            touchTile.zOrder = TILE_TOUCH_ZORDER
+            //println("touch detected at column: \(coord.column) and row: \(coord.row)")
+            self.state = .Moving
+            self.slideDirection = .Unknown
+        }
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        let loc = touch.locationInNode(self) as CGPoint
-        let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
-        touchTile.positionInPoints = ccpAdd(loc, tileOffset)
-        if touchTile.gridCoordinate.row != -1 && coord.isValid() &&
-                (coord.column != touchTile.gridCoordinate.column ||
-                coord.row != touchTile.gridCoordinate.row) {
-            if let tile = tiles[coord.column][coord.row] {
-                tile.gridCoordinate = currentCoordinate
-                tiles[coord.column][coord.row] = nil
-                tiles[currentCoordinate.column][currentCoordinate.row] = tile
-                //self.swapTouchTileWithTile(tile)
-                self.animateTile(tile, toGridCoordinate: currentCoordinate, notify: false)
-                currentCoordinate = coord
+        if self.state == .Moving {
+            let loc = touch.locationInNode(self) as CGPoint
+
+            //This implementations adds a sliding motion to the tiles
+            let touchDiff = ccpSub(loc, touchCoordinate)
+            let xVect = abs(touchDiff.x)
+            let yVect = abs(touchDiff.y)
+            let diff = yVect - xVect
+            var slide: CGPoint = ccp(0,0)
+            
+            if diff > 0.0 {
+                var slideY = diff
+                if touchDiff.y < 0 {
+                    slideY *= -1.0
+                    slideDirection = .Down
+                } else {
+                    slideDirection = .Up
+                }
+                slide = ccp(0, slideY)
+//                slideMode = .Horizontal
+            } else {
+                var slideX = diff
+                if touchDiff.x > 0 {
+                    slideX *= -1.0
+                    slideDirection = .Right
+                } else {
+                    slideDirection = .Left
+                }
+                slide = ccp(slideX, 0)
+//                slideMode = .Vertical
             }
+            
+            moveRowColumnTile(touchTile, byVector: slide, inDirection: slideDirection, animated: false)
         }
     }
     
     override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        let loc = touch.locationInNode(self) as CGPoint
-        let coord = self.gridCoordinateFromPoint(loc) as GridCoordinate!
-        touchTile.gridCoordinate = currentCoordinate
-        tiles[currentCoordinate.column][currentCoordinate.row] = touchTile
-        let wait = self.animateTile(touchTile, toGridCoordinate: currentCoordinate, notify: true)
-        touchTile.zOrder = TILE_NORMAL_ZORDER
-        touchTile = Tile.dummyTile()
-        
-        scheduleOnce(Selector("finishedMove"), delay: wait*2.0)
-        //finishedMove()
+        if self.state == .Moving {
+            let loc = touch.locationInNode(self) as CGPoint
+            let newPosition = loc
+            let oldPosition = self.pointFromGridCoordinate(touchTile.gridCoordinate)
+            var newPositionVector = ccpSub(newPosition, oldPosition)
+            
+            let xVect = abs(newPositionVector.x)
+            let yVect = abs(newPositionVector.y)
+            var diff = yVect - xVect
+            
+            if slideMode == .Horizontal {
+                if newPositionVector.y < 0 {
+                    diff *= -1.0
+                }
+                newPositionVector = ccp(0, diff)
+            } else if slideMode == .Vertical {
+                if newPositionVector.x > 0 {
+                    diff *= -1.0
+                }
+                newPositionVector = ccp(diff, 0)
+            }
+            
+            state = .Adjusting
+        }
     }
     
     override func touchCancelled(touch: CCTouch!, withEvent event: CCTouchEvent!) {
@@ -70,8 +108,8 @@ extension Grid {
     }
     
     func pointFromGridCoordinate(coord: GridCoordinate) -> CGPoint {
-        let x = columnHeight * CGFloat(coord.row) + tileMarginHorizontal * CGFloat(coord.row + 1)
-        let y = columnWidth * CGFloat(coord.column) + tileMarginVertical * CGFloat(coord.column + 1)
+        let x = columnHeight * (CGFloat(coord.row) + 0.5) + tileMarginHorizontal * CGFloat(coord.row + 1)
+        let y = columnWidth * (CGFloat(coord.column) + 0.5) + tileMarginVertical * CGFloat(coord.column + 1)
         return CGPoint(x: x, y: y)
     }
     

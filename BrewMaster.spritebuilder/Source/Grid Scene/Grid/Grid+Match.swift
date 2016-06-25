@@ -8,9 +8,14 @@
 
 import Foundation
 
+enum MatchPriority {
+    case Regular, Large, Super
+}
+
 extension Grid {
 
     func checkMatch() {
+        touchTile = Tile.dummyTile()
         if self.hasMatch() {
             self.clearMatch()
 //            self.settleTiles()
@@ -22,64 +27,170 @@ extension Grid {
 //            self.runAction(CCActionSequence(array: [delay, function]))
         } else {
             self.userInteractionEnabled = true
+            self.state = .Idle
         }
+    }
+    
+    func checkRowColumn() {
+        let startCoord = touchTile.gridCoordinate
+        let slideCoord = gridCoordinateFromPoint(touchTile.position)
+        var potentialMatch = false
+        
+//        switch slideMode {
+//        case .Vertical:
+//            print("checking vertical")
+        switch slideDirection {
+        case .Left, .Right:
+            let slideOffset = startCoord.row - slideCoord.row
+            for i in 0..<GRID_SIZE {
+                let computedRow = (i + slideOffset + GRID_SIZE) % GRID_SIZE
+                
+                guard let checkTile = tiles[startCoord.column][computedRow] else {
+                    return
+                }
+                
+                var aboveOneMatches = false
+                let aboveOneCoordinate = GridCoordinate(row: i, column: startCoord.column+1)
+                if aboveOneCoordinate.isValid() {
+                    if let aboveTile = tiles[aboveOneCoordinate.column][aboveOneCoordinate.row] where aboveTile.contents == checkTile.contents {
+                        aboveOneMatches = true
+                    }
+                }
+                
+                var aboveTwoMatches = false
+                let aboveTwoCoordinate = GridCoordinate(row: i, column: startCoord.column+2)
+                if aboveTwoCoordinate.isValid() {
+                    if let aboveTile = tiles[aboveTwoCoordinate.column][aboveTwoCoordinate.row] where aboveTile.contents == checkTile.contents {
+                        aboveTwoMatches = true
+                    }
+                }
+                
+                var belowOneMatches = false
+                let belowOneCoordinate = GridCoordinate(row: i, column: startCoord.column-1)
+                if belowOneCoordinate.isValid() {
+                    if let belowTile = tiles[belowOneCoordinate.column][belowOneCoordinate.row] where belowTile.contents == checkTile.contents {
+                        belowOneMatches = true
+                    }
+                }
+                
+                var belowTwoMatches = false
+                let belowTwoCoordinate = GridCoordinate(row: i, column: startCoord.column-2)
+                if belowTwoCoordinate.isValid() {
+                    if let belowTile = tiles[belowTwoCoordinate.column][belowTwoCoordinate.row] where belowTile.contents == checkTile.contents {
+                        belowTwoMatches = true
+                    }
+                }
+                
+                if (aboveOneMatches && aboveTwoMatches) || (aboveOneMatches && belowOneMatches) || (belowOneMatches && belowTwoMatches) {
+//                    print("matched \(checkTile.contents)")
+                    potentialMatch = true
+                }
+            }
+//        case .Horizontal:
+         case .Up, .Down:
+            let slideOffset = startCoord.column - slideCoord.column
+            for i in 0..<GRID_SIZE {
+                let computedColumn = (i + slideOffset + GRID_SIZE) % GRID_SIZE
+
+                guard let checkTile = tiles[computedColumn][startCoord.row] else {
+                    return
+                }
+                
+                var leftOneMatches = false
+                let leftOneCoordinate = GridCoordinate(row: startCoord.row-1, column: i)
+                if leftOneCoordinate.isValid() {
+                    if let leftOneTile = tiles[leftOneCoordinate.column][leftOneCoordinate.row] where leftOneTile.contents == checkTile.contents {
+                        leftOneMatches = true
+                    }
+                }
+                
+                var leftTwoMatches = false
+                let leftTwoCoordinate = GridCoordinate(row: startCoord.row-2, column: i)
+                if leftTwoCoordinate.isValid() {
+                    if let leftTwoTile = tiles[leftTwoCoordinate.column][leftTwoCoordinate.row] where leftTwoTile.contents == checkTile.contents {
+                        leftTwoMatches = true
+                    }
+                }
+                
+                var rightOneMatches = false
+                let rightOneCoordinate = GridCoordinate(row: startCoord.row+1, column: i)
+                if rightOneCoordinate.isValid() {
+                    if let rightOneTile = tiles[rightOneCoordinate.column][rightOneCoordinate.row] where rightOneTile.contents == checkTile.contents {
+                        rightOneMatches = true
+                    }
+                }
+                
+                var rightTwoMatches = false
+                let rightTwoCoordinate = GridCoordinate(row: startCoord.row+2, column: i)
+                if rightTwoCoordinate.isValid() {
+                    if let rightTwoTile = tiles[rightTwoCoordinate.column][rightTwoCoordinate.row] where rightTwoTile.contents == checkTile.contents {
+                        rightTwoMatches = true
+                    }
+                }
+                
+                if (rightOneMatches && rightTwoMatches) || (rightOneMatches && leftOneMatches) || (leftOneMatches && leftTwoMatches) {
+//                    print("matched \(checkTile.contents)")
+                    potentialMatch = true
+                }
+            }
+        case .Unknown: break
+        }
+        
+        hasPotentialMatch = potentialMatch
     }
 
     func hasMatch() -> Bool {
+        var foundMatches: [Match] = []
         //Horizontal Matching
-        for var row = 0; row < GRID_SIZE-2; row++ {
-            for var column = 0; column < GRID_SIZE; column++ {
+        for row in 0..<GRID_SIZE-2 {
+            for column in 0..<GRID_SIZE {
                 if let tile1 = tiles[column][row], let tile2 = tiles[column][row+1], let tile3 = tiles[column][row+2] {
                     if tile1.contents == tile2.contents && tile1.contents == tile3.contents {
-                        var newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
-                        matched.unionInPlace(newMatch.tiles)
-                        var hasMatch = false
-                        for var i = 0; i < matches.count; i++ {
-                            var match = matches[i]
-                            //check to see if the match is larger than 3 tiles
-                            if match.tiles.intersect(newMatch.tiles).count > 0 {
-                                match.appendTiles(newMatch)
-                                matches[i] = match
-                                hasMatch = true
-                                //println("match size \(match.tiles.count)")
-                            }
-                        }
-                        if !hasMatch {
-                            matches.append(newMatch)
-                        }
+                        let newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
+                        foundMatches.append(newMatch)
                         //println("Match found!")
                     }
                 }
             }
         }
         //Vertical Matching
-        for var column = 0; column < GRID_SIZE-2; column++ {
-            for var row = 0; row < GRID_SIZE; row++ {
+        for column in 0..<GRID_SIZE-2 {
+            for row in 0..<GRID_SIZE {
                 if let tile1 = tiles[column][row], let tile2 = tiles[column+1][row], let tile3 = tiles[column+2][row] {
                     if tile1.contents == tile2.contents && tile1.contents == tile3.contents {
-                        var newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
-                        matched.unionInPlace(newMatch.tiles)
-                        var hasMatch = false
-                        for var i = 0; i < matches.count; i++ {
-                            var match = matches[i]
-                            //check to see if the match is larger than 3 tiles
-                            if match.tiles.intersect(newMatch.tiles).count > 0 {
-                                match.appendTiles(newMatch)
-                                matches[i] = match
-                                hasMatch = true
-                                //println("match size \(match.tiles.count)")
-                            }
-                        }
-                        if !hasMatch {
-                            matches.append(newMatch)
-                        }
-                        //println("Match found!")
+                        let newMatch = Match(tiles: [tile1, tile2, tile3], type:tile1.contents)
+                        foundMatches.append(newMatch)
                     }
                 }
             }
         }
         //println("Finished check!")
-        return !matches.isEmpty
+        return mergeMatches(foundMatches)
+    }
+    
+    func mergeMatches(matches: [Match]) -> Bool {
+        var mergedMatches: [Match] = []
+        var merged: [Bool] = [Bool](count: matches.count, repeatedValue: false)
+        
+        for i in 0..<matches.count {
+            if !merged[i] {
+                var match = matches[i]
+                for j in i+1..<matches.count {
+                    if !merged[j] {
+                        let possibleMergeMatch = matches[j]
+                        if match.tiles.intersect(possibleMergeMatch.tiles).count > 0 {
+                            match.appendTiles(possibleMergeMatch)
+                            merged[j] = true
+                        }
+                    }
+                }
+                mergedMatches.append(match)
+                merged[i] = true
+            }
+        }
+        self.matches = mergedMatches
+        
+        return !mergedMatches.isEmpty
     }
     
     func clearMatch() {
@@ -108,7 +219,13 @@ extension Grid {
             clearActions.append(spawnSequence)
             let delay = CCActionDelay(duration: TILE_CLEAR_TIME)
             clearActions.append(delay)
-            NSNotificationCenter.defaultCenter().postNotificationName(MATCH, object: type)
+            if match.tiles.count == 3 {
+                NSNotificationCenter.defaultCenter().postNotificationName(MATCH, object: type)
+            } else if match.tiles.count == 4 {
+                NSNotificationCenter.defaultCenter().postNotificationName(LARGE_MATCH, object: type)
+            } else {
+                NSNotificationCenter.defaultCenter().postNotificationName(SUPER_MATCH, object: type)
+            }
         }
         
         if !clearActions.isEmpty {
